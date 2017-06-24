@@ -65,14 +65,14 @@ CJNIDrawable CJNIPackageManager::getApplicationIcon(const std::string &package)
     jcast<jhstring>(package));
 }
 
-CJNICharSequence CJNIPackageManager::getApplicationLabel(const CJNIApplicationInfo &info)
+CJNICharSequence CJNIPackageManager::getApplicationLabel(const jni::CJNIApplicationInfo &info)
 {
   return call_method<jhobject>(m_object,
     "getApplicationLabel", "(Landroid/content/pm/ApplicationInfo;)Ljava/lang/CharSequence;",
     info.get_raw());
 }
 
-CJNIList<CJNIApplicationInfo> CJNIPackageManager::getInstalledApplications(int flags)
+CJNIList<jni::CJNIApplicationInfo> CJNIPackageManager::getInstalledApplications(int flags)
 {
   return call_method<jhobject>(m_object,
     "getInstalledApplications", "(I)Ljava/util/List;",
@@ -86,9 +86,16 @@ CJNIResources CJNIPackageManager::getResourcesForApplication(const std::string &
     jcast<jhstring>(package));
 }
 
-CJNIResources CJNIPackageManager::getResourcesForApplication(const CJNIApplicationInfo &info)
+CJNIResources CJNIPackageManager::getResourcesForApplication(const jni::CJNIApplicationInfo &info)
 {
   return call_method<jhobject>(m_object,
     "getResourcesForApplication", "(Landroid/content/pm/ApplicationInfo;)Landroid/content/res/Resources;",
     info.get_raw());
+}
+
+CJNIList<jni::CJNIResolveInfo>CJNIPackageManager::queryIntentActivities(const CJNIIntent& intent, int flags)
+{
+  return call_method<jhobject>(m_object,
+                               "queryIntentActivities", "(Landroid/content/Intent;I)Ljava/util/List;",
+                               intent.get_raw(), flags);
 }

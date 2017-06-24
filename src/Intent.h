@@ -21,18 +21,19 @@
 
 #include "JNIBase.h"
 #include "ArrayList.h"
+#include "ComponentName.h"
 #include "Context.h"
 #include "URI.h"
 
-class CJNIURI;
 class CJNIIntent : public CJNIBase
 {
 public:
   CJNIIntent(const std::string &action = "");
   CJNIIntent(const CJNIContext& context, const jni::jhclass& cls);
+  CJNIIntent(const std::string &action, const CJNIURI& uri);
   CJNIIntent(const std::string &action, const CJNIURI& uri, const CJNIContext& packageContext, const jni::jhclass& cls);
-  CJNIIntent(const jni::jhobject &intent) : CJNIBase(intent) {};
-  ~CJNIIntent() {};
+  CJNIIntent(const jni::jhobject &intent) : CJNIBase(intent) {}
+  ~CJNIIntent() {}
 
   std::string getAction() const;
   std::string getDataString() const ;
@@ -53,6 +54,7 @@ public:
   void setFlags(int flags);
   void setAction(const std::string &action);
   void setClassName(const std::string &packageName, const std::string &className);
+  void setComponent(const jni::CJNIComponentName &component);
 
   // Note that these are strings. We auto-convert to uri objects.
   void setDataAndType(const CJNIURI &uri, const std::string &type);
@@ -65,5 +67,13 @@ public:
 
   static void PopulateStaticFields();
   static std::string EXTRA_KEY_EVENT;
+
+  static std::string ACTION_MAIN;
   static std::string ACTION_OPEN_DOCUMENT_TREE;
+
+  static std::string CATEGORY_LAUNCHER;
+  static std::string CATEGORY_LEANBACK_LAUNCHER;
+
+  static int FLAG_ACTIVITY_NEW_TASK;
+  static int FLAG_ACTIVITY_RESET_TASK_IF_NEEDED;
 };

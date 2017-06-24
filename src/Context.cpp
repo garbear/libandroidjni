@@ -19,48 +19,49 @@
  */
 
 #include "Context.h"
-#include "PackageManager.h"
-#include <android/log.h>
-#include "Intent.h"
-#include "IntentFilter.h"
-#include "ClassLoader.h"
+
 #include "jutils-details.hpp"
-#include "BroadcastReceiver.h"
-#include "JNIThreading.h"
+
+#include <android/log.h>
+#include <android/native_activity.h>
+
 #include "ApplicationInfo.h"
-#include "File.h"
-#include "ContentResolver.h"
-#include "BaseColumns.h"
-#include "MediaStore.h"
-#include "PowerManager.h"
-#include "Cursor.h"
-#include "ConnectivityManager.h"
 #include "AudioFormat.h"
 #include "AudioAttributes.h"
+#include "AudioDeviceInfo.h"
 #include "AudioManager.h"
 #include "AudioTrack.h"
-#include "Surface.h"
+#include "BaseColumns.h"
+#include "BroadcastReceiver.h"
+#include "Build.h"
+#include "ClassLoader.h"
+#include "ConnectivityManager.h"
+#include "ContentResolver.h"
+#include "Cursor.h"
+#include "DisplayMetrics.h"
+#include "Document.h"
+#include "Environment.h"
+#include "File.h"
 #include "MediaCodec.h"
 #include "MediaCodecInfo.h"
 #include "MediaFormat.h"
-#include "Window.h"
-#include "View.h"
-#include "Build.h"
-#include "DisplayMetrics.h"
-#include "Intent.h"
-#include "KeyEvent.h"
-#include "Settings.h"
-#include "Environment.h"
-#include "Document.h"
-#include "RecognizerIntent.h"
-#include "AudioDeviceInfo.h"
+#include "MediaMetadata.h"
+#include "MediaStore.h"
 #include "MediaSync.h"
 #include "IBinder.h"
-#include "MediaMetadata.h"
+#include "Intent.h"
+#include "IntentFilter.h"
+#include "JNIThreading.h"
+#include "KeyEvent.h"
+#include "PackageManager.h"
 #include "PlaybackState.h"
+#include "PowerManager.h"
+#include "RecognizerIntent.h"
+#include "Settings.h"
+#include "Surface.h"
 #include "URI.h"
-
-#include <android/native_activity.h>
+#include "View.h"
+#include "Window.h"
 
 using namespace jni;
 
@@ -189,7 +190,7 @@ CJNIClassLoader CJNIContext::getClassLoader()
     "getClassLoader", "()Ljava/lang/ClassLoader;");
 }
 
-CJNIApplicationInfo CJNIContext::getApplicationInfo()
+jni::CJNIApplicationInfo CJNIContext::getApplicationInfo()
 {
   return call_method<jhobject>(m_context,
     "getApplicationInfo", "()Landroid/content/pm/ApplicationInfo;");

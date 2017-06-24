@@ -1,5 +1,5 @@
 /*
- *      Copyright (C) 2013 Team XBMC
+ *      Copyright (C) 2016 Christian Browet
  *      http://xbmc.org
  *
  *  This Program is free software; you can redistribute it and/or modify
@@ -18,15 +18,20 @@
  *
  */
 
-#include "PackageItemInfo.h"
+#include "ComponentName.h"
+
 #include "jutils-details.hpp"
 
 using namespace jni;
-const char *CJNIPackageItemInfo::m_classname = "android/content/pm/PackageItemInfo";
 
-CJNIPackageItemInfo::CJNIPackageItemInfo(const jhobject &object)
-  : CJNIBase(object)
-  , icon(       get_field<int>(m_object, "icon"))
-  , name(       jcast<std::string>(get_field<jhstring>(m_object, "name")))
+const char *CJNIComponentName::m_classname = "android/content/ComponentName";
+
+CJNIComponentName::CJNIComponentName(const std::string& pkg, const std::string& cls)
+  : CJNIBase(m_classname)
+
 {
+  m_object = new_object(m_classname, "<init>",
+                        "(Ljava/lang/String;Ljava/lang/String;)V",
+                        jcast<jhstring>(pkg), jcast<jhstring>(cls));
+  m_object.setGlobal();
 }

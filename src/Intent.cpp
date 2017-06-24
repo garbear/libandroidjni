@@ -26,14 +26,24 @@
 using namespace jni;
 
 std::string CJNIIntent::EXTRA_KEY_EVENT;
+std::string CJNIIntent::ACTION_MAIN;
 std::string CJNIIntent::ACTION_OPEN_DOCUMENT_TREE;
+std::string CJNIIntent::CATEGORY_LAUNCHER;
+std::string CJNIIntent::CATEGORY_LEANBACK_LAUNCHER;
+int CJNIIntent::FLAG_ACTIVITY_NEW_TASK;
+int CJNIIntent::FLAG_ACTIVITY_RESET_TASK_IF_NEEDED;
 
 static std::string s_className = "android/content/Intent";
 
 void CJNIIntent::PopulateStaticFields()
 {
   jhclass clazz = find_class(s_className.c_str());
-  EXTRA_KEY_EVENT  = jcast<std::string>(get_static_field<jhstring>(clazz,"EXTRA_KEY_EVENT"));
+  EXTRA_KEY_EVENT = jcast<std::string>(get_static_field<jhstring>(clazz,"EXTRA_KEY_EVENT"));
+  ACTION_MAIN= jcast<std::string>(get_static_field<jhstring>(clazz,"ACTION_MAIN"));
+  CATEGORY_LAUNCHER = jcast<std::string>(get_static_field<jhstring>(clazz,"CATEGORY_LAUNCHER"));
+  CATEGORY_LEANBACK_LAUNCHER= jcast<std::string>(get_static_field<jhstring>(clazz,"CATEGORY_LEANBACK_LAUNCHER"));
+  FLAG_ACTIVITY_NEW_TASK = (get_static_field<int>(clazz,"FLAG_ACTIVITY_NEW_TASK"));
+  FLAG_ACTIVITY_RESET_TASK_IF_NEEDED= (get_static_field<int>(clazz,"FLAG_ACTIVITY_RESET_TASK_IF_NEEDED"));
   if (CJNIIntent::GetSDKVersion() >= 21)
     ACTION_OPEN_DOCUMENT_TREE  = jcast<std::string>(get_static_field<jhstring>(clazz,"ACTION_OPEN_DOCUMENT_TREE"));
 }
@@ -56,6 +66,14 @@ CJNIIntent::CJNIIntent(const CJNIContext& context, const jhclass& cls)
   m_object = new_object(s_className,
                         "<init>", "(Landroid/content/Context;Ljava/lang/Class;)V",
                         context.get_raw(), cls);
+  m_object.setGlobal();
+}
+
+CJNIIntent::CJNIIntent(const std::string& action, const CJNIURI& uri)
+{
+  m_object = new_object(s_className,
+                        "<init>", "(Ljava/lang/String;Landroid/net/Uri;)V",
+                        jcast<jhstring>(action), uri.get_raw());
   m_object.setGlobal();
 }
 
@@ -159,7 +177,14 @@ void CJNIIntent::setClassName(const std::string &packageName, const std::string 
 {
   call_method<jhobject>(m_object,
     "setClassName", "(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;",
-    jcast<jhstring>(packageName), jcast<jhstring>(className));
+                        jcast<jhstring>(packageName), jcast<jhstring>(className));
+}
+
+void CJNIIntent::setComponent(const CJNIComponentName& component)
+{
+  call_method<jhobject>(m_object,
+    "setComponent", "(Landroid/content/ComponentName;)Landroid/content/Intent;",
+    component.get_raw());
 }
 
 void CJNIIntent::setData(const std::string &uri)
@@ -179,7 +204,7 @@ void CJNIIntent::setDataAndType(const CJNIURI &uri, const std::string &type)
 void CJNIIntent::setFlags(int flags)
 {
   call_method<jhobject>(m_object,
-    "setFlags", "(I;)Landroid/content/Intent;",
+    "setFlags", "(I)Landroid/content/Intent;",
     flags);
 }
 

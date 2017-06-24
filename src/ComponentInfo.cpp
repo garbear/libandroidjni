@@ -1,5 +1,5 @@
 /*
- *      Copyright (C) 2013 Team XBMC
+ *      Copyright (C) 2016 Christian Browet
  *      http://xbmc.org
  *
  *  This Program is free software; you can redistribute it and/or modify
@@ -18,15 +18,15 @@
  *
  */
 
-#include "PackageItemInfo.h"
+#include "ComponentInfo.h"
+
 #include "jutils-details.hpp"
 
 using namespace jni;
-const char *CJNIPackageItemInfo::m_classname = "android/content/pm/PackageItemInfo";
 
-CJNIPackageItemInfo::CJNIPackageItemInfo(const jhobject &object)
-  : CJNIBase(object)
-  , icon(       get_field<int>(m_object, "icon"))
-  , name(       jcast<std::string>(get_field<jhstring>(m_object, "name")))
+
+CJNIComponentInfo::CJNIComponentInfo(const jhobject& object)
+  : CJNIPackageItemInfo(object)
+  , applicationInfo(     get_field<jhobject>(m_object, "applicationInfo", "Landroid/content/pm/ApplicationInfo;"))
 {
 }

@@ -20,17 +20,17 @@
  */
 
 #include "JNIBase.h"
+#include "ApplicationInfo.h"
 #include "ClassLoader.h"
 #include "BroadcastReceiver.h"
 
 struct ANativeActivity;
-class CJNIIntent;
-class CJNIPackageManager;
 class CJNIBroadcastReceiver;
-class CJNIIntentFilter;
-class CJNIApplicationInfo;
-class CJNIFile;
 class CJNIContentResolver;
+class CJNIIntent;
+class CJNIIntentFilter;
+class CJNIFile;
+class CJNIPackageManager;
 class CJNIWindow;
 
 class CJNIContext
@@ -51,7 +51,7 @@ public:
   static void sendBroadcast(const CJNIIntent &intent);
   static CJNIIntent getIntent();
   static CJNIClassLoader getClassLoader();
-  static CJNIApplicationInfo getApplicationInfo();
+  static jni::CJNIApplicationInfo getApplicationInfo();
   static std::string getPackageName();
   static std::string getPackageResourcePath();
   static CJNIFile getCacheDir();

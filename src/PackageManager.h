@@ -21,27 +21,29 @@
 
 #include "JNIBase.h"
 #include "List.h"
+#include "ApplicationInfo.h"
+#include "ResolveInfo.h"
 
 class CJNIIntent;
 class CJNIDrawable;
-class CJNIApplicationInfo;
 class CJNICharSequence;
 class CJNIResources;
 
 class CJNIPackageManager : public CJNIBase
 {
 public:
-  CJNIPackageManager(const jni::jhobject &object) : CJNIBase(object) {};
-  ~CJNIPackageManager() {};
+  CJNIPackageManager(const jni::jhobject &object) : CJNIBase(object) {}
+  ~CJNIPackageManager() {}
 
   bool              hasSystemFeature(const std::string &feature);
   CJNIIntent        getLaunchIntentForPackage(const std::string &package);
   CJNIIntent        getLeanbackLaunchIntentForPackage(const std::string &package);
   CJNIDrawable      getApplicationIcon(const std::string &package);
-  CJNIList<CJNIApplicationInfo> getInstalledApplications(int flags);
-  CJNICharSequence  getApplicationLabel(const CJNIApplicationInfo &info);
+  CJNIList<jni::CJNIApplicationInfo> getInstalledApplications(int flags);
+  CJNICharSequence  getApplicationLabel(const jni::CJNIApplicationInfo &info);
   CJNIResources     getResourcesForApplication(const std::string &package);
-  CJNIResources     getResourcesForApplication(const CJNIApplicationInfo &info);
+  CJNIResources     getResourcesForApplication(const jni::CJNIApplicationInfo &info);
+  CJNIList<jni::CJNIResolveInfo> queryIntentActivities(const CJNIIntent& intent, int flags);
 
   static void       PopulateStaticFields();
   static int        GET_ACTIVITIES;

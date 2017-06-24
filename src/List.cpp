@@ -19,14 +19,16 @@
  */
 
 #include "List.h"
-#include "View.h"
-#include "ScanResult.h"
-#include "WifiConfiguration.h"
+
 #include "ApplicationInfo.h"
-#include "URIPermission.h"
-#include "LinkAddress.h"
-#include "RouteInfo.h"
 #include "InetAddress.h"
+#include "LinkAddress.h"
+#include "ResolveInfo.h"
+#include "RouteInfo.h"
+#include "ScanResult.h"
+#include "URIPermission.h"
+#include "View.h"
+#include "WifiConfiguration.h"
 
 #include "jutils-details.hpp"
 
@@ -47,11 +49,12 @@ int CJNIList<T>::size() const
     "size", "()I") : 0;
 }
 
-template class CJNIList<CJNIScanResult>;
-template class CJNIList<CJNIWifiConfiguration>;
 template class CJNIList<CJNIApplicationInfo>;
-template class CJNIList<CJNIViewInputDeviceMotionRange>;
-template class CJNIList<CJNIURIPermission>;
-template class CJNIList<CJNILinkAddress>;
-template class CJNIList<CJNIRouteInfo>;
 template class CJNIList<CJNIInetAddress>;
+template class CJNIList<CJNILinkAddress>;
+template class CJNIList<CJNIResolveInfo>;
+template class CJNIList<CJNIRouteInfo>;
+template class CJNIList<CJNIScanResult>;
+template class CJNIList<CJNIURIPermission>;
+template class CJNIList<CJNIViewInputDeviceMotionRange>;
+template class CJNIList<CJNIWifiConfiguration>;

@@ -25,11 +25,15 @@
 #include "JNIBase.h"
 #include "PackageItemInfo.h"
 
+namespace jni
+{
+
 class CJNIApplicationInfo : public CJNIPackageItemInfo
 {
 public:
-  CJNIApplicationInfo(const jni::jhobject &object);
-  ~CJNIApplicationInfo(){};
+  CJNIApplicationInfo() {}
+  CJNIApplicationInfo(const jhobject &object);
+  ~CJNIApplicationInfo(){}
 
   std::string sourceDir;
   std::string publicSourceDir;
@@ -39,9 +43,8 @@ public:
   int         uid; 
   int         targetSdkVersion;
   bool        enabled;
-
-private:
-  CJNIApplicationInfo();
 };
 
 typedef std::vector<CJNIApplicationInfo> CJNIApplicationInfos;
+
+}

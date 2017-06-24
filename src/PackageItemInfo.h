@@ -21,16 +21,21 @@
 
 #include "JNIBase.h"
 
+namespace jni
+{
+
 class CJNIPackageItemInfo : public CJNIBase
 {
 public:
+  CJNIPackageItemInfo() {}
   CJNIPackageItemInfo(const jni::jhobject &object);
+  virtual ~CJNIPackageItemInfo() {}
 
   int         icon;
+  std::string name;
 
 protected:
-  CJNIPackageItemInfo();
-  ~CJNIPackageItemInfo() {};
   static const char *m_classname;
-
 };
+
+}
