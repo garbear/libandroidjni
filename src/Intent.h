@@ -51,6 +51,7 @@ public:
 
   void addFlags(int flags);
   void addCategory(const std::string &category);
+  void removeCategory(const std::string &category);
   void setFlags(int flags);
   void setAction(const std::string &action);
   void setClassName(const std::string &packageName, const std::string &className);

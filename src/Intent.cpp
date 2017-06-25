@@ -166,6 +166,13 @@ void CJNIIntent::addCategory(const std::string &category)
     jcast<jhstring>(category));
 }
 
+void CJNIIntent::removeCategory(const std::string &category)
+{
+  call_method<void>(m_object,
+    "removeCategory", "(Ljava/lang/String;)V",
+    jcast<jhstring>(category));
+}
+
 void CJNIIntent::setAction(const std::string &action)
 {
   call_method<jhobject>(m_object,
