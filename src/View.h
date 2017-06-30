@@ -23,7 +23,14 @@
 #include "List.h"
 #include "Os.h"
 
+class CJNIView;
 class CJNIDisplay;
+
+class CJNIViewOnLayoutChangeListener : virtual public CJNIBase
+{
+public:
+  virtual void onLayoutChange(CJNIView v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) = 0;
+};
 
 class CJNIViewInputDeviceMotionRange : public CJNIBase
 {
