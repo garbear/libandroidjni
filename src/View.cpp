@@ -182,8 +182,18 @@ std::vector<bool> CJNIViewInputDevice::hasKeys(const std::vector<int> &keys) con
 
 bool CJNIViewInputDevice::hasMicrophone() const
 {
-  return call_method<jboolean>(m_object,
-    "hasMicrophone", "()Z");
+  if (GetSDKVersion() >= 23)
+    return call_method<jboolean>(m_object,
+      "hasMicrophone", "()Z");
+  return false;
+}
+
+bool CJNIViewInputDevice::isEnabled() const
+{
+  if (GetSDKVersion() >= 27)
+    return call_method<jboolean>(m_object,
+      "isEnabled", "()Z");
+  return true;
 }
 
 bool CJNIViewInputDevice::isVirtual() const
@@ -194,9 +204,11 @@ bool CJNIViewInputDevice::isVirtual() const
 
 bool CJNIViewInputDevice::supportsSource(int source) const
 {
-  return call_method<jboolean>(m_object,
-    "supportsSource", "(I)Z",
-    source);
+  if (GetSDKVersion() >= 21)
+    return call_method<jboolean>(m_object,
+      "supportsSource", "(I)Z",
+      source);
+  return false;
 }
 
 const CJNIList<CJNIViewInputDeviceMotionRange> CJNIViewInputDevice::getMotionRanges() const
